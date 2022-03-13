@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { users } from "./Users";
 import { loginUser } from "./redux/actions/userAction";
+import { TextField, Button } from "@mui/material";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -50,21 +51,32 @@ export default function Login() {
       <div className="sign-in-container">
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
-          <input
+          {/* <input
             type="text"
             placeholder="Enter Username"
             className="login-username"
             value={username}
             onChange={handleUsername}
+          /> */}
+          <TextField
+            type="text"
+            value={username}
+            onChange={handleUsername}
+            id="outlined-basic"
+            label="Username"
+            variant="outlined"
           />
-          <input
+          <TextField
             type="password"
-            placeholder="Enter Password"
-            className="login-password"
             value={password}
             onChange={handlePassword}
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
           />
-          <input type="submit" value="Login" />
+          <Button type="submit" variant="outlined">
+            Login
+          </Button>
         </form>
       </div>
     </>

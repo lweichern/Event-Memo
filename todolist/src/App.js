@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Todos from "./Todos";
+import Events from "./Events";
 import Form from "./Form";
 import { nanoid } from "nanoid";
 import Instructions from "./Instructions";
@@ -10,14 +10,14 @@ import Login from "./Login";
 import SignOut from "./SignOut";
 
 export default function App() {
-  const [todos, setTodos] = useState(
-    JSON.parse(localStorage.getItem("todolist")) || []
+  const [events, setEvents] = useState(
+    JSON.parse(localStorage.getItem("eventlist")) || []
   );
-  const [todoTask, setTodoTask] = useState("");
-  const [todoDate, setTodoDate] = useState(todayDate);
-  const [todoNoOfPersons, setTodoNoOfPersons] = useState("");
-  const [todoAssignedTo, setTodoAssignedTo] = useState("Bob");
-  const [todoLocation, setTodoLocation] = useState("");
+  const [eventTask, setEventTask] = useState("");
+  const [eventDate, setEventDate] = useState(todayDate);
+  const [eventNoOfPersons, setEventNoOfPersons] = useState("");
+  const [eventAssignedTo, setEventAssignedTo] = useState("Bob");
+  const [eventLocation, setEventLocation] = useState("");
   const [dragId, setDragId] = useState();
   const loginUser = useSelector((state) => state.user.loginUser);
 
@@ -41,116 +41,116 @@ export default function App() {
 
   useEffect(
     function () {
-      localStorage.setItem("todolist", JSON.stringify(todos));
+      localStorage.setItem("eventlist", JSON.stringify(events));
     },
-    [todos]
+    [events]
   );
 
-  function handleTodoInput(event) {
-    setTodoTask(event.target.value);
+  function handleEventInput(event) {
+    setEventTask(event.target.value);
   }
 
-  console.log(todos);
+  console.log(events);
 
-  function handleTodoLocation(event) {
-    setTodoLocation(event.target.value);
+  function handleEventLocation(event) {
+    setEventLocation(event.target.value);
   }
 
-  function handleTodoNoOfPersons(event) {
-    setTodoNoOfPersons(event.target.value);
+  function handleEventNoOfPersons(event) {
+    setEventNoOfPersons(event.target.value);
   }
 
-  function handleTodoAssignedTo(event) {
-    setTodoAssignedTo(event.target.value);
+  function handleEventAssignedTo(event) {
+    setEventAssignedTo(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const newTodo = {
+    const newEvent = {
       id: nanoid(),
-      task: todoTask,
-      date: todoDate,
+      task: eventTask,
+      date: eventDate,
       isComplete: false,
-      location: todoLocation,
-      noOfPersons: todoNoOfPersons,
-      assignedTo: todoAssignedTo,
-      order: todos.length + 1,
+      location: eventLocation,
+      noOfPersons: eventNoOfPersons,
+      assignedTo: eventAssignedTo,
+      order: events.length + 1,
     };
 
-    setTodoTask("");
-    setTodoAssignedTo("Bob");
-    setTodoLocation("");
-    setTodoNoOfPersons(0);
-    setTodoDate(todayDate);
+    setEventTask("");
+    setEventAssignedTo("Bob");
+    setEventLocation("");
+    setEventNoOfPersons(0);
+    setEventDate(todayDate);
 
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setEvents((prevEvents) => [...prevEvents, newEvent]);
   }
 
-  function handleTodoDate(event) {
-    setTodoDate(event.target.value);
+  function handleEventDate(event) {
+    setEventDate(event.target.value);
   }
 
   function toggleComplete(id) {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        return todo.id === id
-          ? { ...todo, isComplete: !todo.isComplete }
-          : todo;
+    setEvents((prevevents) =>
+      prevevents.map((event) => {
+        return event.id === id
+          ? { ...event, isComplete: !event.isComplete }
+          : event;
       })
     );
   }
 
   function deleteTodoItem(id) {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    setEvents((prevevents) => prevevents.filter((event) => event.id !== id));
   }
 
   function sortTodoByComplete() {
     const newArray = [];
 
-    todos.map((todo) => {
-      todo.isComplete ? newArray.unshift(todo) : newArray.push(todo);
+    events.map((event) => {
+      event.isComplete ? newArray.unshift(event) : newArray.push(event);
     });
 
-    setTodos(newArray);
+    setEvents(newArray);
   }
 
   function sortTodoByIncomplete() {
     const newArray = [];
 
-    todos.map((todo) => {
-      todo.isComplete ? newArray.unshift(todo) : newArray.push(todo);
+    events.map((event) => {
+      event.isComplete ? newArray.unshift(event) : newArray.push(event);
     });
 
-    setTodos(newArray.reverse());
+    setEvents(newArray.reverse());
   }
 
   function sortTodoByEarliestDate() {
-    const newArrayByDate = todos.sort((a, b) => {
+    const newArrayByDate = events.sort((a, b) => {
       return Date.parse(a.date) - Date.parse(b.date);
     });
 
     const newArray = [...newArrayByDate];
 
-    setTodos(newArray);
+    setEvents(newArray);
   }
 
   function sortTodoByLatestDate() {
-    const newArrayByDate = todos.sort((a, b) => {
+    const newArrayByDate = events.sort((a, b) => {
       return Date.parse(a.date) - Date.parse(b.date);
     });
 
     const newArray = [...newArrayByDate];
 
-    setTodos(newArray.reverse());
+    setEvents(newArray.reverse());
   }
 
   function sortByAlphabeticalOrder() {
-    const newArray = todos.sort((a, b) => a.task.localeCompare(b.task));
+    const newArray = events.sort((a, b) => a.task.localeCompare(b.task));
 
     const newArray2 = [...newArray];
 
-    setTodos(newArray2);
+    setEvents(newArray2);
   }
 
   function handleDrag(event) {
@@ -158,34 +158,34 @@ export default function App() {
   }
 
   function handleDrop(event) {
-    const dragTodos = todos.find((todo) => todo.id === dragId);
-    const dropTodos = todos.find((todo) => todo.id === event.target.id);
+    const dragevents = events.find((event) => event.id === dragId);
+    const dropevents = events.find((event) => event.id === event.target.id);
 
     console.log(event.target);
 
-    const dragTodoOrder = dragTodos.order;
-    const dropTodoOrder = dropTodos.order;
+    const dragTodoOrder = dragevents.order;
+    const dropTodoOrder = dropevents.order;
 
-    const newTodosOrder = todos.map((todo) => {
-      if (todo.id === dragId) {
-        todo.order = dropTodoOrder;
+    const neweventsOrder = events.map((event) => {
+      if (event.id === dragId) {
+        event.order = dropTodoOrder;
       }
 
-      if (todo.id === event.target.id) {
-        todo.order = dragTodoOrder;
+      if (event.id === event.target.id) {
+        event.order = dragTodoOrder;
       }
 
-      return todo;
+      return event;
     });
 
-    setTodos(newTodosOrder);
+    setEvents(neweventsOrder);
   }
 
   function updateTodoOrder() {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo, index) => {
+    setEvents((prevevents) =>
+      prevevents.map((event, index) => {
         return {
-          ...todo,
+          ...event,
           order: index + 1,
         };
       })
@@ -218,27 +218,27 @@ export default function App() {
     updateTodoOrder();
   }
 
-  const filteredEventElements = todos.filter(
+  const filteredEventElements = events.filter(
     (item) => item.assignedTo === loginUser
   );
 
-  const todoElements = filteredEventElements
+  const eventElements = filteredEventElements
     .sort((a, b) => a.order - b.order)
-    .map((todoItem) => (
-      <Todos
-        key={todoItem.id}
-        task={todoItem.task}
-        date={todoItem.date}
-        location={todoItem.location}
-        noOfPersons={todoItem.noOfPersons}
-        assignedTo={todoItem.assignedTo}
-        isComplete={todoItem.isComplete}
+    .map((eventItem) => (
+      <Events
+        key={eventItem.id}
+        task={eventItem.task}
+        date={eventItem.date}
+        location={eventItem.location}
+        noOfPersons={eventItem.noOfPersons}
+        assignedTo={eventItem.assignedTo}
+        isComplete={eventItem.isComplete}
         handleToggle={toggleComplete}
-        id={todoItem.id}
+        id={eventItem.id}
         deleteTodo={deleteTodoItem}
         handleDrag={handleDrag}
         handleDrop={handleDrop}
-        order={todoItem.order}
+        order={eventItem.order}
       />
     ));
 
@@ -248,23 +248,23 @@ export default function App() {
         <>
           <SignOut />
           <Instructions />
-          <div className="todolist-container">
+          <div className="eventlist-container">
             <h1 className="header-title">Todolist</h1>
             <Form
-              todoTask={todoTask}
-              todoDate={todoDate}
-              todoLocation={todoLocation}
-              todoNoOfPersons={todoNoOfPersons}
-              todoAssignedTo={todoAssignedTo}
+              eventTask={eventTask}
+              eventDate={eventDate}
+              eventLocation={eventLocation}
+              eventNoOfPersons={eventNoOfPersons}
+              eventAssignedTo={eventAssignedTo}
               handleSubmit={handleSubmit}
-              handleTodoInput={handleTodoInput}
-              handleTodoDate={handleTodoDate}
-              handleTodoLocation={handleTodoLocation}
-              handleTodoNoOfPersons={handleTodoNoOfPersons}
-              handleTodoAssignedTo={handleTodoAssignedTo}
+              handleEventInput={handleEventInput}
+              handleEventDate={handleEventDate}
+              handleEventLocation={handleEventLocation}
+              handleEventNoOfPersons={handleEventNoOfPersons}
+              handleEventAssignedTo={handleEventAssignedTo}
             />
             <Sort handleChange={handleSortChange} />
-            <div className="todos-container">{todoElements}</div>
+            <div className="events-container">{eventElements}</div>
           </div>
         </>
       ) : (

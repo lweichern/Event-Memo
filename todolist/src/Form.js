@@ -7,31 +7,31 @@ export default function Form(props) {
     <form onSubmit={props.handleSubmit} className="form-input">
       <input
         type="text"
-        value={props.todoTask}
+        value={props.eventTask}
         placeholder="Enter items..."
-        onChange={props.handleTodoInput}
+        onChange={props.handleEventInput}
         className="input-name"
         required
       />
       <input
         type="text"
-        value={props.todoLocation}
+        value={props.eventLocation}
         placeholder="Enter Location"
-        onChange={props.handleTodoLocation}
+        onChange={props.handleEventLocation}
         className="input input-location"
       />
       <input
         type="number"
-        value={props.todoNoOfPersons}
-        onChange={props.handleTodoNoOfPersons}
+        value={props.eventNoOfPersons}
+        onChange={props.handleEventNoOfPersons}
         className="input input-persons"
         min="0"
       />
       <select
         type="text"
-        value={props.todoAssignedTo}
+        value={props.eventAssignedTo}
         placeholder="Enter Assigned Person"
-        onChange={props.handleTodoAssignedTo}
+        onChange={props.handleEventAssignedTo}
         className="input input-assigned-to"
       >
         {users.map((user) => {
@@ -44,8 +44,8 @@ export default function Form(props) {
       </select>
       <input
         type="date"
-        onChange={props.handleTodoDate}
-        value={props.todoDate}
+        onChange={props.handleEventDate}
+        value={props.eventDate}
         className="input-date"
       />
       <input type="submit" className="submit-btn" />

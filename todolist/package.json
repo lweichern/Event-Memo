@@ -1,13 +1,16 @@
 {
-  "name": "todolist",
+  "name": "eventlist",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://lweichern.github.io/todolist",
+  "homepage": "https://lweichern.github.io/eventlist",
   "dependencies": {
     "-": "^0.0.1",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.17",
+    "@mui/material": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
