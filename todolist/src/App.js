@@ -5,6 +5,9 @@ import { nanoid } from "nanoid";
 import Instructions from "./Instructions";
 import Sort from "./Sort";
 import { faBox } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import Login from "./Login";
+import SignOut from "./SignOut";
 
 export default function App() {
   const [todos, setTodos] = useState(
@@ -12,7 +15,15 @@ export default function App() {
   );
   const [todoTask, setTodoTask] = useState("");
   const [todoDate, setTodoDate] = useState(todayDate);
+  const [todoNoOfPersons, setTodoNoOfPersons] = useState("");
+  const [todoAssignedTo, setTodoAssignedTo] = useState("Bob");
+  const [todoLocation, setTodoLocation] = useState("");
   const [dragId, setDragId] = useState();
+  const loginUser = useSelector((state) => state.user.loginUser);
+
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  console.log(loginUser);
 
   function datePadding(number) {
     if (number.toString().length === 1) {
@@ -41,6 +52,18 @@ export default function App() {
 
   console.log(todos);
 
+  function handleTodoLocation(event) {
+    setTodoLocation(event.target.value);
+  }
+
+  function handleTodoNoOfPersons(event) {
+    setTodoNoOfPersons(event.target.value);
+  }
+
+  function handleTodoAssignedTo(event) {
+    setTodoAssignedTo(event.target.value);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -49,10 +72,16 @@ export default function App() {
       task: todoTask,
       date: todoDate,
       isComplete: false,
+      location: todoLocation,
+      noOfPersons: todoNoOfPersons,
+      assignedTo: todoAssignedTo,
       order: todos.length + 1,
     };
 
     setTodoTask("");
+    setTodoAssignedTo("Bob");
+    setTodoLocation("");
+    setTodoNoOfPersons(0);
     setTodoDate(todayDate);
 
     setTodos((prevTodos) => [...prevTodos, newTodo]);
@@ -189,13 +218,20 @@ export default function App() {
     updateTodoOrder();
   }
 
-  const todoElements = todos
+  const filteredEventElements = todos.filter(
+    (item) => item.assignedTo === loginUser
+  );
+
+  const todoElements = filteredEventElements
     .sort((a, b) => a.order - b.order)
     .map((todoItem) => (
       <Todos
         key={todoItem.id}
         task={todoItem.task}
         date={todoItem.date}
+        location={todoItem.location}
+        noOfPersons={todoItem.noOfPersons}
+        assignedTo={todoItem.assignedTo}
         isComplete={todoItem.isComplete}
         handleToggle={toggleComplete}
         id={todoItem.id}
@@ -208,19 +244,34 @@ export default function App() {
 
   return (
     <main>
-      <Instructions />
-      <div className="todolist-container">
-        <h1 className="header-title">Todolist</h1>
-        <Form
-          handleSubmit={handleSubmit}
-          handleTodoInput={handleTodoInput}
-          todoTask={todoTask}
-          handleTodoDate={handleTodoDate}
-          todoDate={todoDate}
-        />
-        <Sort handleChange={handleSortChange} />
-        <div className="todos-container">{todoElements}</div>
-      </div>
+      {isLoggedIn ? (
+        <>
+          <SignOut />
+          <Instructions />
+          <div className="todolist-container">
+            <h1 className="header-title">Todolist</h1>
+            <Form
+              todoTask={todoTask}
+              todoDate={todoDate}
+              todoLocation={todoLocation}
+              todoNoOfPersons={todoNoOfPersons}
+              todoAssignedTo={todoAssignedTo}
+              handleSubmit={handleSubmit}
+              handleTodoInput={handleTodoInput}
+              handleTodoDate={handleTodoDate}
+              handleTodoLocation={handleTodoLocation}
+              handleTodoNoOfPersons={handleTodoNoOfPersons}
+              handleTodoAssignedTo={handleTodoAssignedTo}
+            />
+            <Sort handleChange={handleSortChange} />
+            <div className="todos-container">{todoElements}</div>
+          </div>
+        </>
+      ) : (
+        <>
+          <Login />
+        </>
+      )}
     </main>
   );
 }

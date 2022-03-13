@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 
 export default function Todos(props) {
-  console.log(typeof props.id);
-
   const styles = {
     background: !props.isComplete ? "rgb(233, 110, 110)" : "rgb(110, 233, 116)",
   };
@@ -28,6 +26,15 @@ export default function Todos(props) {
       </h3>
       <h4 className="todo-date" id={props.id}>
         {props.date}
+      </h4>
+      <h4 className="todo-location" id={props.id}>
+        {props.location}
+      </h4>
+      <h4 className="todo-no-of-persons" id={props.id}>
+        {props.noOfPersons}
+      </h4>
+      <h4 className="todo-assigned-to" id={props.id}>
+        {props.assignedTo}
       </h4>
       <FontAwesomeIcon
         icon={faTrash}
