@@ -31,6 +31,7 @@ main {
   padding: 20px;
   display: flex;
   justify-content: space-evenly;
+  flex-direction: column;
 }
 
 .input-name {
@@ -51,6 +52,7 @@ main {
 
 .submit-btn {
   padding: 10px;
+  margin-top: 10px;
   background: #293264;
   color: #fff;
   outline: none;
@@ -72,7 +74,8 @@ main {
   -webkit-touch-callout: none;
   -ms-user-select: none;
   user-select: none;
-  min-width: 660px;
+  width: 70%;
+  max-width: 1150px;
 }
 
 .event-item {
@@ -104,7 +107,7 @@ main {
 .instructions-container {
   position: fixed;
   padding: 14px;
-  right: 0;
+  left: 0;
   top: 0;
   background: rgba(41, 50, 100, 0.9);
   border-radius: 6px;
@@ -129,17 +132,19 @@ main {
 .info-icon {
   position: absolute;
   top: 2%;
-  right: 2%;
-  font-size: 20px;
+  left: 2%;
+  font-size: 30px;
   color: #1b2146;
   cursor: pointer;
   opacity: 0;
   transform: translateX(40px);
   visibility: hidden;
+  border-radius: 50%;
+  transition: 0.4s;
 }
 
 .info-icon:hover {
-  color: #1a6b2e;
+  box-shadow: 2px 2px 5px 1px #22329b;
 }
 
 .instructions-container h1 {
@@ -193,6 +198,9 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 2px solid #293264;
+  padding: 1rem;
+  border-radius: 0.4rem;
 }
 
 .sign-in-container h1 {
@@ -203,6 +211,7 @@ main {
 .sign-in-container form {
   display: flex;
   flex-direction: column;
+  padding: 0.4rem;
 }
 
 .sign-in-container form > * {
@@ -213,7 +222,7 @@ main {
 .sign-out-btn {
   position: absolute;
   top: 3%;
-  left: 3%;
+  right: 3%;
   padding: 0.7rem;
   color: #fff;
   background: red;
@@ -235,7 +244,7 @@ main {
 
   to {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(-40px);
     visibility: hidden;
   }
 }
@@ -243,7 +252,7 @@ main {
 @keyframes showAnimation {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(-40px);
     visibility: hidden;
   }
 
@@ -251,5 +260,18 @@ main {
     opacity: 1;
     transform: translateX(0);
     visibility: visible;
+  }
+}
+
+@media screen and (max-width: 1010px) {
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input {
+    width: 70%;
+    min-width: 200px;
   }
 }

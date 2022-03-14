@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { users } from "./Users";
 import { loginUser } from "./redux/actions/userAction";
 import { TextField, Button } from "@mui/material";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -48,7 +49,12 @@ export default function Login() {
 
   return (
     <>
-      <div className="sign-in-container">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="sign-in-container"
+      >
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
           {/* <input
@@ -65,6 +71,7 @@ export default function Login() {
             id="outlined-basic"
             label="Username"
             variant="outlined"
+            style={{ overflow: "visible" }}
           />
           <TextField
             type="password"
@@ -73,12 +80,13 @@ export default function Login() {
             id="outlined-basic"
             label="Password"
             variant="outlined"
+            style={{ overflow: "visible" }}
           />
           <Button type="submit" variant="outlined">
             Login
           </Button>
         </form>
-      </div>
+      </motion.div>
     </>
   );
 }
