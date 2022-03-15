@@ -53,13 +53,15 @@ export default function Instructions() {
           onClick={closeHandle}
           className="close-btn"
         />
-        <ol>
-          <li>Enter task and date desired</li>
-          <li>Hit the submit button or "Enter" key to add task</li>
-          <li>Click on the trash can icon to delete tasks</li>
-          <li>Double click on a task to toggle it to complete/not complete</li>
-          <li>Drag and drop the tasks to rearrange</li>
-        </ol>
+        <ul>
+          <li>- Enter event details desired.</li>
+          <li>- Hit the submit button or "Enter" key to add task.</li>
+          <li>- Click on the trash can icon to delete tasks.</li>
+          <li>
+            - Double click on a task to toggle it to complete/ incomplete.
+          </li>
+          <li>- Drag and drop the tasks to rearrange.</li>
+        </ul>
       </div>
     </>
   );

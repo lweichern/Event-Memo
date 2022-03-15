@@ -8,6 +8,7 @@ import { faBox } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import Login from "./Login";
 import SignOut from "./SignOut";
+import UserDetails from "./UserDetails";
 
 export default function App() {
   const [events, setEvents] = useState(
@@ -92,8 +93,8 @@ export default function App() {
   }
 
   function toggleComplete(id) {
-    setEvents((prevevents) =>
-      prevevents.map((event) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((event) => {
         return event.id === id
           ? { ...event, isComplete: !event.isComplete }
           : event;
@@ -102,7 +103,7 @@ export default function App() {
   }
 
   function deleteTodoItem(id) {
-    setEvents((prevevents) => prevevents.filter((event) => event.id !== id));
+    setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
   }
 
   function sortTodoByComplete() {
@@ -182,8 +183,8 @@ export default function App() {
   }
 
   function updateTodoOrder() {
-    setEvents((prevevents) =>
-      prevevents.map((event, index) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((event, index) => {
         return {
           ...event,
           order: index + 1,
@@ -269,6 +270,7 @@ export default function App() {
         </>
       ) : (
         <>
+          <UserDetails />
           <Login />
         </>
       )}
