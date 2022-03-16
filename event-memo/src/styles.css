@@ -336,4 +336,16 @@ main {
     width: 70%;
     min-width: 200px;
   }
+
+  .events-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .instructions-container {
+    width: 50%;
+  }
 }
