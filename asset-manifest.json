@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Event-Memo/static/css/main.2a3df3cf.css",
-    "main.js": "/Event-Memo/static/js/main.2048ca28.js",
+    "main.css": "/Event-Memo/static/css/main.cc88b6b5.css",
+    "main.js": "/Event-Memo/static/js/main.6bfdb9fe.js",
     "index.html": "/Event-Memo/index.html",
-    "main.2a3df3cf.css.map": "/Event-Memo/static/css/main.2a3df3cf.css.map",
-    "main.2048ca28.js.map": "/Event-Memo/static/js/main.2048ca28.js.map"
+    "main.cc88b6b5.css.map": "/Event-Memo/static/css/main.cc88b6b5.css.map",
+    "main.6bfdb9fe.js.map": "/Event-Memo/static/js/main.6bfdb9fe.js.map"
   },
   "entrypoints": [
-    "static/css/main.2a3df3cf.css",
-    "static/js/main.2048ca28.js"
+    "static/css/main.cc88b6b5.css",
+    "static/js/main.6bfdb9fe.js"
   ]
 }
