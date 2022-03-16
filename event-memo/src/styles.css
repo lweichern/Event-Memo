@@ -76,6 +76,8 @@ main {
   user-select: none;
   width: 70%;
   max-width: 1150px;
+  overflow: scroll;
+  height: 90vh;
 }
 
 .event-item {

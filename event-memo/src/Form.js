@@ -20,6 +20,7 @@ export default function Form(props) {
           placeholder="Enter Location"
           onChange={props.handleEventLocation}
           className="input input-location"
+          required
         />
         <input
           type="number"
@@ -28,6 +29,7 @@ export default function Form(props) {
           className="input input-persons"
           min="0"
           placeholder="No of People Attending"
+          required
         />
         <select
           type="text"
