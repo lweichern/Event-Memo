@@ -1,5 +1,5 @@
 import React from "react";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 
@@ -27,19 +27,16 @@ export default function Events(props) {
       <h4 className="event-date" id={props.id}>
         {props.date}
       </h4>
-      <h4 className="event-location" id={props.id}>
-        {props.location}
-      </h4>
-      <h4 className="event-no-of-persons" id={props.id}>
-        {props.noOfPersons}
-      </h4>
-      <h4 className="event-assigned-to" id={props.id}>
-        {props.assignedTo}
-      </h4>
+
+      <FontAwesomeIcon
+        icon={faInfoCircle}
+        className="event-info-icon"
+        onClick={() => props.handlePopup(props.id)}
+      />
       <FontAwesomeIcon
         icon={faTrash}
         className="trash-icon"
-        onClick={() => props.deleteTodo(props.id)}
+        onClick={props.deleteTodo(props.id)}
         id={props.id}
       />
     </motion.div>

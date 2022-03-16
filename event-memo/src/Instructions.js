@@ -56,7 +56,8 @@ export default function Instructions() {
         <ul>
           <li>- Enter event details desired.</li>
           <li>- Hit the submit button or "Enter" key to add task.</li>
-          <li>- Click on the trash can icon to delete tasks.</li>
+          <li>- Click on the info icon to see event details.</li>
+          <li>- Click on the trash can icon to delete an event.</li>
           <li>
             - Double click on a task to toggle it to complete/ incomplete.
           </li>

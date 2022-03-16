@@ -50,20 +50,14 @@ export default function Login() {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
+        exit={{ x: -100, opacity: 0 }}
         className="sign-in-container"
       >
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
-          {/* <input
-            type="text"
-            placeholder="Enter Username"
-            className="login-username"
-            value={username}
-            onChange={handleUsername}
-          /> */}
           <TextField
             type="text"
             value={username}

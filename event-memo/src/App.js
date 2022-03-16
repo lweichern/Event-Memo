@@ -4,11 +4,12 @@ import Form from "./Form";
 import { nanoid } from "nanoid";
 import Instructions from "./Instructions";
 import Sort from "./Sort";
-import { faBox } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import Login from "./Login";
 import SignOut from "./SignOut";
 import UserDetails from "./UserDetails";
+import Popup from "./Popup";
+import { AnimatePresence } from "framer-motion";
 
 export default function App() {
   const [events, setEvents] = useState(
@@ -21,6 +22,8 @@ export default function App() {
   const [eventLocation, setEventLocation] = useState("");
   const [dragId, setDragId] = useState();
   const loginUser = useSelector((state) => state.user.loginUser);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [currentEventId, setCurrentEventId] = useState("");
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -102,9 +105,11 @@ export default function App() {
     );
   }
 
-  function deleteTodoItem(id) {
+  const deleteTodoItem = (id) => (event) => {
+    console.log(event);
+    event.stopPropagation();
     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-  }
+  };
 
   function sortTodoByComplete() {
     const newArray = [];
@@ -158,11 +163,11 @@ export default function App() {
     setDragId(event.target.id);
   }
 
-  function handleDrop(event) {
+  function handleDrop(ev) {
     const dragevents = events.find((event) => event.id === dragId);
-    const dropevents = events.find((event) => event.id === event.target.id);
+    const dropevents = events.find((event) => event.id === ev.target.id);
 
-    console.log(event.target);
+    console.log(ev.target.id);
 
     const dragTodoOrder = dragevents.order;
     const dropTodoOrder = dropevents.order;
@@ -172,7 +177,7 @@ export default function App() {
         event.order = dropTodoOrder;
       }
 
-      if (event.id === event.target.id) {
+      if (event.id === ev.target.id) {
         event.order = dragTodoOrder;
       }
 
@@ -219,6 +224,13 @@ export default function App() {
     updateTodoOrder();
   }
 
+  console.log(currentEventId);
+
+  const handlePopup = (id) => {
+    setOpenPopup(!openPopup);
+    setCurrentEventId(id);
+  };
+
   const filteredEventElements = events.filter(
     (item) => item.assignedTo === loginUser
   );
@@ -240,6 +252,7 @@ export default function App() {
         handleDrag={handleDrag}
         handleDrop={handleDrop}
         order={eventItem.order}
+        handlePopup={handlePopup}
       />
     ));
 
@@ -265,8 +278,19 @@ export default function App() {
               handleEventAssignedTo={handleEventAssignedTo}
             />
             <Sort handleChange={handleSortChange} />
-            <div className="events-container">{eventElements}</div>
+            <AnimatePresence>
+              <div className="events-container">{eventElements}</div>
+            </AnimatePresence>
           </div>
+          <AnimatePresence>
+            {openPopup && (
+              <Popup
+                handlePopup={handlePopup}
+                id={currentEventId}
+                allEvents={events}
+              />
+            )}
+          </AnimatePresence>
         </>
       ) : (
         <>
