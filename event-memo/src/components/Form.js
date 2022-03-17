@@ -1,6 +1,6 @@
 import React from "react";
 import { faTasks, faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { users } from "./Users";
+import { users } from "../Users";
 
 export default function Form(props) {
   return (

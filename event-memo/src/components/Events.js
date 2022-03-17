@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 
 export default function Events(props) {
+  // Change background of event cards according to completion status
   const styles = {
     background: !props.isComplete ? "rgb(233, 110, 110)" : "rgb(110, 233, 116)",
   };
@@ -36,7 +37,7 @@ export default function Events(props) {
       <FontAwesomeIcon
         icon={faTrash}
         className="trash-icon"
-        onClick={props.deleteTodo(props.id)}
+        onClick={props.deleteEvent(props.id)}
         id={props.id}
       />
     </motion.div>

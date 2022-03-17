@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Events from "./Events";
-import Form from "./Form";
+import Events from "./components/Events";
+import Form from "./components/Form";
 import { nanoid } from "nanoid";
-import Instructions from "./Instructions";
-import Sort from "./Sort";
+import Instructions from "./components/Instructions";
+import Sort from "./components/Sort";
 import { useSelector } from "react-redux";
-import Login from "./Login";
-import SignOut from "./SignOut";
-import UserDetails from "./UserDetails";
-import Popup from "./Popup";
+import Login from "./components/Login";
+import SignOut from "./components/SignOut";
+import UserDetails from "./components/UserDetails";
+import Popup from "./components/Popup";
 import { AnimatePresence } from "framer-motion";
 
 export default function App() {
+  // get from local storage
   const [events, setEvents] = useState(
     JSON.parse(localStorage.getItem("eventlist")) || []
   );
+
+  // Event details
   const [eventTask, setEventTask] = useState("");
   const [eventDate, setEventDate] = useState(todayDate);
   const [eventNoOfPersons, setEventNoOfPersons] = useState("");
@@ -25,9 +28,8 @@ export default function App() {
   const [openPopup, setOpenPopup] = useState(false);
   const [currentEventId, setCurrentEventId] = useState("");
 
+  // variable to check if a user is logged in
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
-  console.log(loginUser);
 
   function datePadding(number) {
     if (number.toString().length === 1) {
@@ -44,6 +46,7 @@ export default function App() {
   }
 
   useEffect(
+    // store to local storage
     function () {
       localStorage.setItem("eventlist", JSON.stringify(events));
     },
@@ -53,8 +56,6 @@ export default function App() {
   function handleEventInput(event) {
     setEventTask(event.target.value);
   }
-
-  console.log(events);
 
   function handleEventLocation(event) {
     setEventLocation(event.target.value);
@@ -68,6 +69,11 @@ export default function App() {
     setEventAssignedTo(event.target.value);
   }
 
+  function handleEventDate(event) {
+    setEventDate(event.target.value);
+  }
+
+  // Submit function
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -82,6 +88,7 @@ export default function App() {
       order: events.length + 1,
     };
 
+    // Reset each input after submit
     setEventTask("");
     setEventAssignedTo("Bob");
     setEventLocation("");
@@ -91,10 +98,7 @@ export default function App() {
     setEvents((prevEvents) => [...prevEvents, newEvent]);
   }
 
-  function handleEventDate(event) {
-    setEventDate(event.target.value);
-  }
-
+  // Toggle completion status
   function toggleComplete(id) {
     setEvents((prevEvents) =>
       prevEvents.map((event) => {
@@ -105,13 +109,15 @@ export default function App() {
     );
   }
 
-  const deleteTodoItem = (id) => (event) => {
+  // Delete function
+  const deleteEventItem = (id) => (event) => {
     console.log(event);
     event.stopPropagation();
     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
   };
 
-  function sortTodoByComplete() {
+  // Sort functions
+  function sortEventByComplete() {
     const newArray = [];
 
     events.map((event) => {
@@ -121,7 +127,7 @@ export default function App() {
     setEvents(newArray);
   }
 
-  function sortTodoByIncomplete() {
+  function sortEventByIncomplete() {
     const newArray = [];
 
     events.map((event) => {
@@ -131,7 +137,7 @@ export default function App() {
     setEvents(newArray.reverse());
   }
 
-  function sortTodoByEarliestDate() {
+  function sortEventByEarliestDate() {
     const newArrayByDate = events.sort((a, b) => {
       return Date.parse(a.date) - Date.parse(b.date);
     });
@@ -141,7 +147,7 @@ export default function App() {
     setEvents(newArray);
   }
 
-  function sortTodoByLatestDate() {
+  function sortEventByLatestDate() {
     const newArrayByDate = events.sort((a, b) => {
       return Date.parse(a.date) - Date.parse(b.date);
     });
@@ -169,16 +175,16 @@ export default function App() {
 
     console.log(ev.target.id);
 
-    const dragTodoOrder = dragevents.order;
-    const dropTodoOrder = dropevents.order;
+    const dragEventOrder = dragevents.order;
+    const dropEventOrder = dropevents.order;
 
     const neweventsOrder = events.map((event) => {
       if (event.id === dragId) {
-        event.order = dropTodoOrder;
+        event.order = dropEventOrder;
       }
 
       if (event.id === ev.target.id) {
-        event.order = dragTodoOrder;
+        event.order = dragEventOrder;
       }
 
       return event;
@@ -187,7 +193,7 @@ export default function App() {
     setEvents(neweventsOrder);
   }
 
-  function updateTodoOrder() {
+  function updateEventOrder() {
     setEvents((prevEvents) =>
       prevEvents.map((event, index) => {
         return {
@@ -201,19 +207,19 @@ export default function App() {
   function handleSortChange(event) {
     switch (event.target.value) {
       case "earliestDate":
-        sortTodoByEarliestDate();
+        sortEventByEarliestDate();
         break;
 
       case "latestDate":
-        sortTodoByLatestDate();
+        sortEventByLatestDate();
         break;
 
       case "complete":
-        sortTodoByComplete();
+        sortEventByComplete();
         break;
 
       case "incomplete":
-        sortTodoByIncomplete();
+        sortEventByIncomplete();
         break;
 
       case "alphabetical":
@@ -221,16 +227,15 @@ export default function App() {
         break;
     }
 
-    updateTodoOrder();
+    updateEventOrder();
   }
-
-  console.log(currentEventId);
 
   const handlePopup = (id) => {
     setOpenPopup(!openPopup);
     setCurrentEventId(id);
   };
 
+  // Filter the events assigned to different individuals upon login
   const filteredEventElements = events.filter(
     (item) => item.assignedTo === loginUser
   );
@@ -248,7 +253,7 @@ export default function App() {
         isComplete={eventItem.isComplete}
         handleToggle={toggleComplete}
         id={eventItem.id}
-        deleteTodo={deleteTodoItem}
+        deleteEvent={deleteEventItem}
         handleDrag={handleDrag}
         handleDrop={handleDrop}
         order={eventItem.order}
@@ -263,7 +268,7 @@ export default function App() {
           <SignOut />
           <Instructions />
           <div className="eventlist-container">
-            <h1 className="header-title">Todolist</h1>
+            <h1 className="header-title">Eventlist</h1>
             <Form
               eventTask={eventTask}
               eventDate={eventDate}

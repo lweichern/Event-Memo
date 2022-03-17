@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { users } from "./Users";
-import { loginUser } from "./redux/actions/userAction";
+import { users } from "../Users";
+import { loginUser } from "../redux/actions/userAction";
 import { TextField, Button } from "@mui/material";
 import { motion } from "framer-motion";
 
@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [userList, setUserList] = useState([]);
 
+  // Get login details from redux
   const user = useSelector((state) => state.user.loginUser);
   const dispatch = useDispatch();
 
@@ -27,6 +28,7 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
+  // function to handle user login
   const handleSubmit = (event) => {
     event.preventDefault();
 

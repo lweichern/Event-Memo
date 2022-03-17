@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 export default function Popup({ handlePopup, id, allEvents }) {
   const [currentEvent, setCurrentEvent] = useState({});
 
-  console.log(id);
   useEffect(() => {
     const findEvent = allEvents.find((event) => event.id === id);
 
